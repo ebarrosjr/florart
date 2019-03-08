@@ -54,6 +54,19 @@ class ProdutosController extends AppController
         $this->set(compact('mao_de_obra'));
     }
 
+    public function delmao($id = null)
+    {
+        $this->Manufaturas = TableRegistry::get('Manufaturas');
+        $this->request->allowMethod(['post', 'delete']);
+        $mao_de_obra = $this->Manufaturas->get($id);
+        if ($this->Manufaturas->delete($mao_de_obra)) {
+            $this->Flash->success(__('The produto has been deleted.'));
+        } else {
+            $this->Flash->error(__('The produto could not be deleted. Please, try again.'));
+        }
+        return $this->redirect(['action' => 'maoDeObra']);
+    }
+
     public function add()
     {
         $produto = $this->Produtos->newEntity();

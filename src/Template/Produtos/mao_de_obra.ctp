@@ -21,7 +21,7 @@
                         <td><?= $m->unidade?'Sim':'Não' ?></td>
                         <td class="actions">
                             <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edtmao', $m->id],['escape'=>false,'class'=>'_colorbox']) ?>
-                            <?= $this->Form->postLink('<i class="fe fe-trash"></i>', ['action' => 'delete', $m->id], ['confirm' => __('Are you sure you want to delete # {0}?', $m->id),'escape'=>false]) ?>
+                            <?= $this->Form->postLink('<i class="fe fe-trash"></i>', ['action' => 'delmao', $m->id], ['confirm' => __('Are you sure you want to delete # {0}?', $m->id),'escape'=>false]) ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
