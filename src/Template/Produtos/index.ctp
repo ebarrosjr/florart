@@ -26,9 +26,8 @@
                         <td><?= $this->Number->format($produto->valor_atacado) ?></td>
                         <td><?= $this->Number->format($produto->estoque_minimo) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $produto->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $produto->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $produto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produto->id)]) ?>
+                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edit', $produto->id],['escape'=>false]) ?>
+                            <?= $this->Form->postLink('<i class="fe fe-trash"></i>', ['action' => 'delete', $produto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produto->id),'escape'=>false]) ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
