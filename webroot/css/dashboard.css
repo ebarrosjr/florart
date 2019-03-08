@@ -9843,7 +9843,7 @@ a.text-dark:hover, a.text-dark:focus {
   .table, .text-wrap table {
     border-collapse: collapse !important;
   }
-  
+
   .table td,
   .text-wrap table td, .table th, .text-wrap table th {
     background-color: #fff !important;
@@ -12803,6 +12803,12 @@ a.icon:hover {
 
 .alert {
   font-size: 0.9375rem;
+  text-align: center;
+  border-radius: 0 !important;
+}
+
+.hidden{
+    display: none;
 }
 
 .alert-icon {

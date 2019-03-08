@@ -1,29 +1,41 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Produto $produto
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Produtos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Grupo Produtos'), ['controller' => 'GrupoProdutos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Grupo Produto'), ['controller' => 'GrupoProdutos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="produtos form large-9 medium-8 columns content">
-    <?= $this->Form->create($produto) ?>
-    <fieldset>
-        <legend><?= __('Add Produto') ?></legend>
-        <?php
-            echo $this->Form->control('grupo_produto_id', ['options' => $grupoProdutos, 'empty' => true]);
-            echo $this->Form->control('nome');
-            echo $this->Form->control('valor_varejo');
-            echo $this->Form->control('valor_atacado');
-            echo $this->Form->control('estoque_minimo');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="col-12">
+    <div class="card">
+        <?= $this->Form->create($produto) ?>
+        <div class="card-header">
+            <h3 class="card-title">Novo produto</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            <div class="col-md-3">
+                <?php
+                echo $this->Form->control('grupo_produto_id', ['options' => $grupoProdutos, 'empty' => true,'class'=>'form-control']);
+                ?>
+                </div>
+                <div class="col-md-9">
+                <?php
+                echo $this->Form->control('nome',['class'=>'form-control']);
+                ?>
+                </div>
+                <div class="col-md-4">
+                <?php
+                echo $this->Form->control('valor_varejo',['class'=>'form-control']);
+                ?>
+                </div>
+                <div class="col-md-4">
+                <?php
+                echo $this->Form->control('valor_atacado',['class'=>'form-control']);
+                ?>
+                </div>
+                <div class="col-md-4">
+                <?php
+                echo $this->Form->control('estoque_minimo',['class'=>'form-control']);
+                ?>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <?=$this->Form->button(' Gravar ', ['class'=>'btn btn-success']) ?>
+        </div>
+        <?= $this->Form->end() ?>
+    </div>
 </div>

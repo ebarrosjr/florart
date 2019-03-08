@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 class ProdutosController extends AppController
 {
@@ -11,24 +12,48 @@ class ProdutosController extends AppController
             'contain' => ['GrupoProdutos']
         ];
         $produtos = $this->paginate($this->Produtos);
-
         $this->set(compact('produtos'));
     }
 
-    public function view($id = null)
+    public function maoDeObra()
     {
-        $produto = $this->Produtos->get($id, [
-            'contain' => ['GrupoProdutos']
-        ]);
-
-        $this->set('produto', $produto);
+        $this->Manufaturas = TableRegistry::get('Manufaturas');
+        $manufaturas = $this->paginate($this->Manufaturas);
+        $this->set(compact('manufaturas'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
+    public function addmao()
+    {
+        $this->Manufaturas = TableRegistry::get('Manufaturas');
+        $mao_de_obra = $this->Manufaturas->newEntity();
+        if ($this->request->is('post')) {
+            $mao_de_obra = $this->Manufaturas->patchEntity($mao_de_obra, $this->request->getData());
+            if ($this->Manufaturas->save($mao_de_obra)) {
+                $this->Flash->success(__('The produto has been saved.'));
+
+                return $this->redirect(['action' => 'mao-de-obra']);
+            }
+            $this->Flash->error(__('The produto could not be saved. Please, try again.'));
+        }
+        $this->set(compact('mao_de_obra'));
+    }
+
+    public function edtmao($id=null)
+    {
+        $this->Manufaturas = TableRegistry::get('Manufaturas');
+        $mao_de_obra = $this->Manufaturas->get($id);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $mao_de_obra = $this->Manufaturas->patchEntity($mao_de_obra, $this->request->getData());
+            if ($this->Manufaturas->save($mao_de_obra)) {
+                $this->Flash->success(__('The produto has been saved.'));
+
+                return $this->redirect(['action' => 'mao-de-obra']);
+            }
+            $this->Flash->error(__('The produto could not be saved. Please, try again.'));
+        }
+        $this->set(compact('mao_de_obra'));
+    }
+
     public function add()
     {
         $produto = $this->Produtos->newEntity();
@@ -45,13 +70,6 @@ class ProdutosController extends AppController
         $this->set(compact('produto', 'grupoProdutos'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Produto id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $produto = $this->Produtos->get($id, [
@@ -70,13 +88,6 @@ class ProdutosController extends AppController
         $this->set(compact('produto', 'grupoProdutos'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Produto id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
@@ -86,7 +97,6 @@ class ProdutosController extends AppController
         } else {
             $this->Flash->error(__('The produto could not be deleted. Please, try again.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }

@@ -27,6 +27,7 @@
     </script>
     <!-- Dashboard Core -->
     <link href="/css/dashboard.css" rel="stylesheet" />
+    <link href="/css/colorbox.css" rel="stylesheet" />
     <script src="/js/dashboard.js"></script>
     <!-- c3.js Charts Plugin -->
     <link href="/plugins/charts-c3/plugin.css" rel="stylesheet" />
@@ -36,6 +37,7 @@
     <script src="/plugins/maps-google/plugin.js"></script>
     <!-- Input Mask Plugin -->
     <script src="/plugins/input-mask/plugin.js"></script>
+    <script src="/js/colorbox.min.js"></script>
   </head>
   <body class="">
     <div class="page">
@@ -95,7 +97,7 @@
                       <?=$this->Html->link('Lotes',[],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Fabricação',[],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Produtos',['controller'=>'produtos'],['class'=>"dropdown-item"])?></a>
-                      <?=$this->Html->link('Mão de obra',[],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Mão de obra',['controller'=>'produtos','action'=>'maoDeObra'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Matéria-prima',['controller'=>'materia-primas'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Tipo de matéria-prima',['controller'=>'tipo-materia-primas'],['class'=>"dropdown-item"])?></a>
                     </div>
@@ -123,6 +125,7 @@
             </div>
           </div>
         </div>
+        <?=$this->Flash->render();?>
         <div class="my-3 my-md-5">
             <div class="container">
               <div class="row">
@@ -132,5 +135,10 @@
         </div>
       </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('._colorbox').colorbox();
+        });
+    </script>
   </body>
 </html>
