@@ -7,13 +7,15 @@ use Cake\ORM\Entity;
  * Lote Entity
  *
  * @property int $id
- * @property int|null $produto_id
+ * @property int|null $fabricacao_id
  * @property string|null $numero
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenDate|null $validade
  * @property bool|null $finalizado
+ * @property float|null $quantidade
+ * @property int|null $unidade_medida_id
  *
- * @property \App\Model\Entity\Produto $produto
+ * @property \App\Model\Entity\Fabricacao $fabricacao
  */
 class Lote extends Entity
 {
@@ -28,11 +30,13 @@ class Lote extends Entity
      * @var array
      */
     protected $_accessible = [
-        'produto_id' => true,
+        'fabricacao_id' => true,
         'numero' => true,
         'created' => true,
         'validade' => true,
         'finalizado' => true,
-        'produto' => true
+        'quantidade' => true,
+        'unidade_medida_id' => true,
+        'fabricacao' => true
     ];
 }

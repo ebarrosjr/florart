@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
 --
--- Host: localhost    Database: sis_florart
+-- Host: localhost    Database: sistema_florart
 -- ------------------------------------------------------
--- Server version	5.7.25-0ubuntu0.16.04.2
+-- Server version	5.7.25-0ubuntu0.18.10.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -88,13 +88,11 @@ DROP TABLE IF EXISTS `fabricacao`;
 CREATE TABLE `fabricacao` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `produto_id` int(10) unsigned DEFAULT NULL,
-  `materia_prima_id` int(10) unsigned DEFAULT NULL,
-  `quantidade` double(8,2) unsigned DEFAULT NULL,
-  `manufatura_id` int(10) unsigned DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `valor` double(15,2) unsigned DEFAULT NULL,
-  `unitario` tinyint(1) unsigned DEFAULT NULL,
-  `data` timestamp NULL DEFAULT NULL,
+  `data_fabricacao` timestamp NULL DEFAULT NULL,
+  `data_validade` timestamp NULL DEFAULT NULL,
+  `quantidade` double(15,2) unsigned DEFAULT NULL,
+  `unidade_medida_id` int(10) unsigned DEFAULT NULL,
+  `observacao` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -143,7 +141,7 @@ CREATE TABLE `grupo_produtos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +150,7 @@ CREATE TABLE `grupo_produtos` (
 
 LOCK TABLES `grupo_produtos` WRITE;
 /*!40000 ALTER TABLE `grupo_produtos` DISABLE KEYS */;
+INSERT INTO `grupo_produtos` VALUES (1,'Grupo vermelho');
 /*!40000 ALTER TABLE `grupo_produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,6 +185,39 @@ INSERT INTO `itens_notas` VALUES (1,1,119,10.00,5.00,NULL,NULL,'C'),(2,1,139,5.0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `itens_producao`
+--
+
+DROP TABLE IF EXISTS `itens_producao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itens_producao` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `manufatura_id` int(10) unsigned DEFAULT NULL,
+  `materia_prima_id` int(10) unsigned DEFAULT NULL,
+  `prefabricacao_id` int(10) unsigned DEFAULT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `quantidade` double(15,2) unsigned DEFAULT NULL,
+  `valor_combinado` double(15,2) unsigned DEFAULT NULL,
+  `unitario` tinyint(1) unsigned DEFAULT NULL,
+  `data_inicio` timestamp NULL DEFAULT NULL,
+  `data_fim` timestamp NULL DEFAULT NULL,
+  `valor_pago` double(15,2) unsigned DEFAULT NULL,
+  `forma_pagamento_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itens_producao`
+--
+
+LOCK TABLES `itens_producao` WRITE;
+/*!40000 ALTER TABLE `itens_producao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itens_producao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lotes`
 --
 
@@ -194,11 +226,13 @@ DROP TABLE IF EXISTS `lotes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `lotes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `produto_id` int(10) unsigned DEFAULT NULL,
+  `fabricacao_id` int(10) unsigned DEFAULT NULL,
   `numero` varchar(45) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `validade` date DEFAULT NULL,
   `finalizado` tinyint(1) unsigned DEFAULT NULL,
+  `quantidade` double(15,2) unsigned DEFAULT NULL,
+  `unidade_medida_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -265,6 +299,36 @@ INSERT INTO `materia_primas` VALUES (1,7,'AGUA',NULL),(2,8,'ALCOOL CEREAIS COM F
 UNLOCK TABLES;
 
 --
+-- Table structure for table `prefabricacao`
+--
+
+DROP TABLE IF EXISTS `prefabricacao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `prefabricacao` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `produto_id` int(10) unsigned DEFAULT NULL,
+  `grupo_produto_id` int(10) unsigned DEFAULT NULL,
+  `tipo_produto_id` int(10) unsigned DEFAULT NULL,
+  `data_fabricacao` timestamp NULL DEFAULT NULL,
+  `data_validade` timestamp NULL DEFAULT NULL,
+  `nome` varchar(45) DEFAULT NULL,
+  `quantidade` double(15,2) DEFAULT NULL,
+  `unidade_medida_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prefabricacao`
+--
+
+LOCK TABLES `prefabricacao` WRITE;
+/*!40000 ALTER TABLE `prefabricacao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prefabricacao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `produtos`
 --
 
@@ -327,7 +391,7 @@ CREATE TABLE `tipo_materia_primas` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,6 +402,30 @@ LOCK TABLES `tipo_materia_primas` WRITE;
 /*!40000 ALTER TABLE `tipo_materia_primas` DISABLE KEYS */;
 INSERT INTO `tipo_materia_primas` VALUES (1,'FAVAS'),(2,'ESSENCIAS'),(3,'FRASCO'),(4,'RÓTULO'),(5,'EMBALAGEM'),(6,'AROMATICOS (EXCETO ESSENCIA)'),(7,'BASE'),(8,'SOLVENTE'),(9,'CORANTE'),(10,'ADITIVOS'),(11,'ERVAS'),(12,'MISSANGA'),(13,'RESINAS / MINERAIS ETC'),(14,'FAB PROPRIA');
 /*!40000 ALTER TABLE `tipo_materia_primas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_produtos`
+--
+
+DROP TABLE IF EXISTS `tipo_produtos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_produtos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_produtos`
+--
+
+LOCK TABLES `tipo_produtos` WRITE;
+/*!40000 ALTER TABLE `tipo_produtos` DISABLE KEYS */;
+INSERT INTO `tipo_produtos` VALUES (1,'Pó'),(2,'Água');
+/*!40000 ALTER TABLE `tipo_produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -403,4 +491,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-13 16:30:53
+-- Dump completed on 2019-03-18  8:17:11

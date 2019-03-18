@@ -1,30 +1,43 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Produtos<?=$this->Html->link('<i class="fe fe-plus"></i> Novo', ['action'=>'add'],['class'=>'btn btn-pill btn-success btn-sm float-right','escape'=>false])?></h3>
+            <h3 class="card-title">Pré-Fabricação<?=$this->Html->link('<i class="fe fe-plus"></i> Novo', ['action'=>'pre-fabricar'],['class'=>'btn btn-pill btn-success btn-sm float-right','escape'=>false])?></h3>
         </div>
         <div class="card-body">
             <table class="table card-table table-vcenter">
                 <thead>
                     <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">grupo_produto_id</th>
-                        <th scope="col">nome</th>
-                        <th scope="col">valor_varejo</th>
-                        <th scope="col">valor_atacado</th>
-                        <th scope="col">estoque_minimo</th>
+                        <th scope="col">Grupo, Tipo ou Produto</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Data de fabricação</th>
+                        <th scope="col">Validade</th>
+                        <th scope="col">Quantidade</th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($produtos as $produto): ?>
+                    <?php foreach ($pf as $produto): ?>
                     <tr>
-                        <td><?= $this->Number->format($produto->id) ?></td>
-                        <td><?= $produto->has('grupo_produto') ? $this->Html->link($produto->grupo_produto->id, ['controller' => 'GrupoProdutos', 'action' => 'view', $produto->grupo_produto->id]) : '' ?></td>
+                        <td>
+                        <?php
+                        if($produto->produto_id!='')
+                        {
+                            print '[P] '.$produto->produto->nome;
+                        }
+                        if($produto->tipo_produto_id!='')
+                        {
+                            print '[TP] '.$produto->tipo_produto->nome;
+                        }
+                        if($produto->grupo_produto_id!='')
+                        {
+                            print '[GP] '.$produto->grupo_produto->nome;
+                        }
+                        ?>
+                        </td>
                         <td><?= h($produto->nome) ?></td>
-                        <td><?= $this->Number->format($produto->valor_varejo) ?></td>
-                        <td><?= $this->Number->format($produto->valor_atacado) ?></td>
-                        <td><?= $this->Number->format($produto->estoque_minimo) ?></td>
+                        <td><?= $produto->data_fabricacao ?></td>
+                        <td><?= $produto->data_validade ?></td>
+                        <td><?= $produto->quantidade ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $produto->id]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $produto->id]) ?>

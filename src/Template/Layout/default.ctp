@@ -95,20 +95,22 @@
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-package"></i> Produção</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
                       <?=$this->Html->link('Lotes',[],['class'=>"dropdown-item"])?></a>
-                      <?=$this->Html->link('Fabricação',[],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Fabricação',['controller'=>'produtos','action'=>'fabrica'],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Pré-Fabricação',['controller'=>'produtos','action'=>'preFabrica'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Produtos',['controller'=>'produtos'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Mão de obra',['controller'=>'produtos','action'=>'maoDeObra'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Matéria-prima',['controller'=>'materia-primas'],['class'=>"dropdown-item"])?></a>
-                      <?=$this->Html->link('Tipo de matéria-prima',['controller'=>'tipo-materia-primas'],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Tipos e Grupos',['controller'=>'tipo-materia-primas'],['class'=>"dropdown-item"])?></a>
                     </div>
                   </li>
                   <li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-dollar-sign"></i> Financeiro</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
-                      <?=$this->Html->link('Compras',['controller'=>'financeiro','action'=>'compras'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Pedidos',['controller'=>'financeiro','action'=>'pedidos'],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Compras',['controller'=>'financeiro','action'=>'compras'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Vendas',['controller'=>'financeiro','action'=>'vendas'],['class'=>"dropdown-item"])?></a>
-                      <?=$this->Html->link('Vendas',['controller'=>'financeiro','action'=>'vendas'],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Fechamento',['controller'=>'financeiro','action'=>'fechamento'],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Relatórios',['controller'=>'relatorios','action'=>'financeiro'],['class'=>"dropdown-item"])?></a>
                     </div>
                   </li>
                   <li class="nav-item dropdown">

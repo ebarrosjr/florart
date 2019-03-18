@@ -4,15 +4,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * GrupoProduto Entity
+ * TipoProduto Entity
  *
  * @property int $id
  * @property string|null $nome
  *
- * @property \App\Model\Entity\Produto[] $produtos
- * @property \App\Model\Entity\TipoProduto[] $tipo_produtos
+ * @property \App\Model\Entity\GrupoProduto $grupo_produto
  */
-class GrupoProduto extends Entity
+class TipoProduto extends Entity
 {
 
     /**
@@ -26,7 +25,6 @@ class GrupoProduto extends Entity
      */
     protected $_accessible = [
         'nome' => true,
-        'produtos' => true,
-        'tipo_produtos' => true
+        'grupo_produto' => true
     ];
 }

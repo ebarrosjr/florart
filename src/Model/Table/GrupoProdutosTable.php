@@ -34,7 +34,7 @@ class GrupoProdutosTable extends Table
         parent::initialize($config);
 
         $this->setTable('grupo_produtos');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Produtos', [

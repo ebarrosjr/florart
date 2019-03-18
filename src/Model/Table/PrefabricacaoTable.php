@@ -6,20 +6,24 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class LotesTable extends Table
+class PrefabricacaoTable extends Table
 {
     public function initialize(array $config)
     {
         parent::initialize($config);
 
-        $this->setTable('lotes');
+        $this->setTable('prefabricacao');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Fabricacaos', [
-            'foreignKey' => 'fabricacao_id'
+        $this->belongsTo('Produtos', [
+            'foreignKey' => 'produto_id'
+        ]);
+        $this->belongsTo('GrupoProdutos', [
+            'foreignKey' => 'grupo_produto_id'
+        ]);
+        $this->belongsTo('TipoProdutos', [
+            'foreignKey' => 'tipo_produto_id'
         ]);
         $this->belongsTo('UnidadeMedidas', [
             'foreignKey' => 'unidade_medida_id'
@@ -33,28 +37,27 @@ class LotesTable extends Table
             ->allowEmptyString('id', 'create');
 
         $validator
-            ->scalar('numero')
-            ->maxLength('numero', 45)
-            ->allowEmptyString('numero');
+            ->dateTime('data_fabricacao')
+            ->allowEmptyDateTime('data_fabricacao');
 
         $validator
-            ->date('validade')
-            ->allowEmptyDate('validade');
+            ->dateTime('data_validade')
+            ->allowEmptyDateTime('data_validade');
 
         $validator
-            ->boolean('finalizado')
-            ->allowEmptyString('finalizado');
+            ->scalar('nome')
+            ->maxLength('nome', 45)
+            ->allowEmptyString('nome');
 
         $validator
             ->numeric('quantidade')
-            ->greaterThanOrEqual('quantidade', 0)
             ->allowEmptyString('quantidade');
 
         return $validator;
     }
+
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['fabricacao_id'], 'Fabricacao'));
         $rules->add($rules->existsIn(['unidade_medida_id'], 'UnidadeMedidas'));
         return $rules;
     }

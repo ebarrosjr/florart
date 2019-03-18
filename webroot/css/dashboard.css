@@ -18623,3 +18623,21 @@ svg {
 .fe-zoom-out:before {
   content: "\ea06";
 }
+
+/*Materia prima selector*/
+.mps{
+  cursor: pointer;
+  min-width: 160px;
+  border-color: #dadee9;
+  padding: 9px 1px;
+  text-align: center;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 40, 100, 0.12);
+  border-radius: 3px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.mps .item-opt{
+  text-align: left;
+}

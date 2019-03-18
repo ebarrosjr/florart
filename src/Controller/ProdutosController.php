@@ -15,6 +15,27 @@ class ProdutosController extends AppController
         $this->set(compact('produtos'));
     }
 
+    public function preFabrica()
+    {
+        $this->PreFabricacao = TableRegistry::get('Prefabricacao');
+        $pf = $this->PreFabricacao->find('all');
+        $this->paginate = [
+            'contain' => ['Produtos','TipoProdutos','GrupoProdutos','UnidadeMedidas']
+        ];
+        $produtos = $this->paginate($pf);
+        $this->set(compact('pf'));
+    }
+
+    public function preFabricar()
+    {
+        $this->PreFabricacao = TableRegistry::get('Prefabricacao');
+        $preFabricacao = $this->PreFabricacao->newEntity();
+
+        $usuarios = TableRegistry::get('Users')->find('list')->where(['active'=>1]);
+        $manufaturas = TableRegistry::get('Manufaturas')->find('list');
+        $this->set(compact('preFabricacao','usuarios','manufaturas'));
+    }
+
     public function maoDeObra()
     {
         $this->Manufaturas = TableRegistry::get('Manufaturas');

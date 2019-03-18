@@ -4,20 +4,24 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Fabricacao Entity
+ * Prefabricacao Entity
  *
  * @property int $id
  * @property int|null $produto_id
+ * @property int|null $grupo_produto_id
+ * @property int|null $tipo_produto_id
  * @property \Cake\I18n\FrozenTime|null $data_fabricacao
  * @property \Cake\I18n\FrozenTime|null $data_validade
+ * @property string|null $nome
  * @property float|null $quantidade
  * @property int|null $unidade_medida_id
- * @property string|null $observacao
  *
  * @property \App\Model\Entity\Produto $produto
+ * @property \App\Model\Entity\GrupoProduto $grupo_produto
+ * @property \App\Model\Entity\TipoProduto $tipo_produto
  * @property \App\Model\Entity\UnidadeMedida $unidade_medida
  */
-class Fabricacao extends Entity
+class Prefabricacao extends Entity
 {
 
     /**
@@ -31,12 +35,16 @@ class Fabricacao extends Entity
      */
     protected $_accessible = [
         'produto_id' => true,
+        'grupo_produto_id' => true,
+        'tipo_produto_id' => true,
         'data_fabricacao' => true,
         'data_validade' => true,
+        'nome' => true,
         'quantidade' => true,
         'unidade_medida_id' => true,
-        'observacao' => true,
         'produto' => true,
+        'grupo_produto' => true,
+        'tipo_produto' => true,
         'unidade_medida' => true
     ];
 }

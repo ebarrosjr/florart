@@ -6,20 +6,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * FormaPagamentos Model
- *
- * @property \App\Model\Table\ComprasTable|\Cake\ORM\Association\HasMany $Compras
- *
- * @method \App\Model\Entity\FormaPagamento get($primaryKey, $options = [])
- * @method \App\Model\Entity\FormaPagamento newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\FormaPagamento[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\FormaPagamento|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\FormaPagamento|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\FormaPagamento patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\FormaPagamento[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\FormaPagamento findOrCreate($search, callable $callback = null, $options = [])
- */
+
 class FormaPagamentosTable extends Table
 {
 
@@ -38,6 +25,9 @@ class FormaPagamentosTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Compras', [
+            'foreignKey' => 'forma_pagamento_id'
+        ]);
+        $this->hasMany('ItensProducao', [
             'foreignKey' => 'forma_pagamento_id'
         ]);
     }

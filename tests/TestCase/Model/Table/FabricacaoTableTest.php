@@ -26,9 +26,7 @@ class FabricacaoTableTest extends TestCase
     public $fixtures = [
         'app.Fabricacao',
         'app.Produtos',
-        'app.MateriaPrimas',
-        'app.Manufaturas',
-        'app.Users'
+        'app.UnidadeMedidas'
     ];
 
     /**

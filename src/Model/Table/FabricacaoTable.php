@@ -10,9 +10,8 @@ use Cake\Validation\Validator;
  * Fabricacao Model
  *
  * @property \App\Model\Table\ProdutosTable|\Cake\ORM\Association\BelongsTo $Produtos
- * @property \App\Model\Table\MateriaPrimasTable|\Cake\ORM\Association\BelongsTo $MateriaPrimas
- * @property \App\Model\Table\ManufaturasTable|\Cake\ORM\Association\BelongsTo $Manufaturas
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UnidadeMedidasTable|\Cake\ORM\Association\BelongsTo $UnidadeMedidas
+ * @property |\Cake\ORM\Association\HasMany $Lotes
  *
  * @method \App\Model\Entity\Fabricacao get($primaryKey, $options = [])
  * @method \App\Model\Entity\Fabricacao newEntity($data = null, array $options = [])
@@ -43,14 +42,11 @@ class FabricacaoTable extends Table
         $this->belongsTo('Produtos', [
             'foreignKey' => 'produto_id'
         ]);
-        $this->belongsTo('MateriaPrimas', [
-            'foreignKey' => 'materia_prima_id'
+        $this->belongsTo('UnidadeMedidas', [
+            'foreignKey' => 'unidade_medida_id'
         ]);
-        $this->belongsTo('Manufaturas', [
-            'foreignKey' => 'manufatura_id'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+        $this->hasMany('Lotes', [
+            'foreignKey' => 'fabricacao_id'
         ]);
     }
 
@@ -67,22 +63,22 @@ class FabricacaoTable extends Table
             ->allowEmptyString('id', 'create');
 
         $validator
+            ->dateTime('data_fabricacao')
+            ->allowEmptyDateTime('data_fabricacao');
+
+        $validator
+            ->dateTime('data_validade')
+            ->allowEmptyDateTime('data_validade');
+
+        $validator
             ->numeric('quantidade')
             ->greaterThanOrEqual('quantidade', 0)
             ->allowEmptyString('quantidade');
 
         $validator
-            ->numeric('valor')
-            ->greaterThanOrEqual('valor', 0)
-            ->allowEmptyString('valor');
-
-        $validator
-            ->boolean('unitario')
-            ->allowEmptyString('unitario');
-
-        $validator
-            ->dateTime('data')
-            ->allowEmptyDateTime('data');
+            ->scalar('observacao')
+            ->maxLength('observacao', 4294967295)
+            ->allowEmptyString('observacao');
 
         return $validator;
     }
@@ -97,9 +93,7 @@ class FabricacaoTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
-        $rules->add($rules->existsIn(['materia_prima_id'], 'MateriaPrimas'));
-        $rules->add($rules->existsIn(['manufatura_id'], 'Manufaturas'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['unidade_medida_id'], 'UnidadeMedidas'));
 
         return $rules;
     }
