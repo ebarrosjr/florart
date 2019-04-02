@@ -17,26 +17,8 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
-/**
- * Application Controller
- *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
- *
- * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
- */
 class AppController extends Controller
 {
-
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
     public function initialize()
     {
         parent::initialize();
@@ -93,5 +75,9 @@ class AppController extends Controller
 
     public function isAuthorized($user){
         return true;
+    }
+
+    public function acertaData($dt){
+        return date('Y-m-d', strtotime(str_replace('/', '-', $dt)));
     }
 }

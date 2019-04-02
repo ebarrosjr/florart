@@ -6,32 +6,40 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class TipoProdutosTable extends Table
+class MateriaprimaDisponiveisTable extends Table
 {
+
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
     public function initialize(array $config)
     {
         parent::initialize($config);
-
-        $this->setTable('tipo_produtos');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
+
+        $this->setTable('materiaprima_disponiveis');
     }
 
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
     public function validationDefault(Validator $validator)
     {
         $validator
             ->nonNegativeInteger('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id');
 
         $validator
             ->scalar('nome')
-            ->maxLength('nome', 45)
+            ->maxLength('nome', 181)
             ->allowEmptyString('nome');
-
-        $validator
-            ->scalar('codigo_ncn')
-            ->maxLength('codigo_ncn', 45)
-            ->allowEmptyString('codigo_ncn');
 
         return $validator;
     }

@@ -63,19 +63,58 @@ class TipoMateriaPrimasController extends AppController
 
     public function edit($id = null)
     {
-        $tipoMateriaPrima = $this->TipoMateriaPrimas->get($id, [
+        $grtp = $this->TipoMateriaPrimas->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $tipoMateriaPrima = $this->TipoMateriaPrimas->patchEntity($tipoMateriaPrima, $this->request->getData());
-            if ($this->TipoMateriaPrimas->save($tipoMateriaPrima)) {
+            $grtp = $this->TipoMateriaPrimas->patchEntity($grtp, $this->request->getData());
+            if ($this->TipoMateriaPrimas->save($grtp)) {
                 $this->Flash->success(__('The tipo materia prima has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The tipo materia prima could not be saved. Please, try again.'));
         }
-        $this->set(compact('tipoMateriaPrima'));
+        $this->set(compact('grtp'));
+    }
+
+    public function edtTipo($id = null)
+    {
+        $this->TipoProdutos = TableRegistry::get('TipoProdutos');
+        $this->viewBuilder()->setTemplate('edit');
+        $grtp = $this->TipoProdutos->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $grtp = $this->TipoProdutos->patchEntity($grtp, $this->request->getData());
+            if ($this->TipoProdutos->save($grtp)) {
+                $this->Flash->success(__('The tipo has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The tipo could not be saved. Please, try again.'));
+        }
+        $this->set(compact('grtp'));
+    }
+
+
+    public function edtGrupo($id = null)
+    {
+        $this->GrupoProdutos = TableRegistry::get('GrupoProdutos');
+        $this->viewBuilder()->setTemplate('edit');
+        $grtp = $this->GrupoProdutos->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $grtp = $this->GrupoProdutos->patchEntity($grtp, $this->request->getData());
+            if ($this->GrupoProdutos->save($grtp)) {
+                $this->Flash->success(__('The grupo has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The grupo could not be saved. Please, try again.'));
+        }
+        $this->set(compact('grtp'));
     }
 
     public function delete($id = null)

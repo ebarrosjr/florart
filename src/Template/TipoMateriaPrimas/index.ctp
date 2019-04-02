@@ -16,7 +16,7 @@
                     <tr>
                         <td><?= $tipoMateriaPrima->nome ?></td>
                         <td class="actions">
-                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edit', $tipoMateriaPrima->id],['escape'=>false]) ?>
+                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edit', $tipoMateriaPrima->id],['escape'=>false,'class'=>'_colorbox']) ?>
                             <?= $this->Form->postLink('<i class="fe fe-trash"></i>', ['action' => 'delete', $tipoMateriaPrima->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tipoMateriaPrima->id),'escape'=>false]) ?>                        
                         </td>
                     </tr>
@@ -44,7 +44,7 @@
                     <tr>
                         <td><?= $tipo->nome ?></td>
                         <td class="actions">
-                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edit', $tipo->id],['escape'=>false]) ?>
+                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edtTipo', $tipo->id],['escape'=>false,'class'=>'_colorbox']) ?>
                             <?= $this->Form->postLink('<i class="fe fe-trash"></i>', ['action' => 'delete', $tipo->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tipo->id),'escape'=>false]) ?>                        
                         </td>
                     </tr>
@@ -72,7 +72,7 @@
                     <tr>
                         <td><?= $grupo->nome ?></td>
                         <td class="actions">
-                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edit', $grupo->id],['escape'=>false]) ?>
+                            <?= $this->Html->link('<i class="fe fe-edit"></i>', ['action' => 'edtGrupo', $grupo->id],['escape'=>false,'class'=>'_colorbox']) ?>
                             <?= $this->Form->postLink('<i class="fe fe-trash"></i>', ['action' => 'delete', $grupo->id], ['confirm' => __('Are you sure you want to delete # {0}?', $grupo->id),'escape'=>false]) ?>                        
                         </td>
                     </tr>

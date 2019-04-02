@@ -18,26 +18,20 @@
     <title>Sistema Florart</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-    <script src="/js/vendors/jquery-3.2.1.min.js"></script>
-    <script src="/js/require.min.js"></script>
+    <?=$this->Html->script('vendors/jquery-3.2.1.min')?>
+    <?=$this->Html->script('require.min')?>
     <script>
       requirejs.config({
           baseUrl: '.'
       });
     </script>
     <!-- Dashboard Core -->
-    <link href="/css/dashboard.css" rel="stylesheet" />
-    <link href="/css/colorbox.css" rel="stylesheet" />
-    <script src="/js/dashboard.js"></script>
-    <!-- c3.js Charts Plugin -->
-    <link href="/plugins/charts-c3/plugin.css" rel="stylesheet" />
-    <script src="/plugins/charts-c3/plugin.js"></script>
-    <!-- Google Maps Plugin -->
-    <link href="/plugins/maps-google/plugin.css" rel="stylesheet" />
-    <script src="/plugins/maps-google/plugin.js"></script>
+    <?=$this->Html->css('dashboard')?>
+    <?=$this->Html->css('colorbox')?>
+    <?=$this->Html->script('dashboard')?>
     <!-- Input Mask Plugin -->
-    <script src="/plugins/input-mask/plugin.js"></script>
-    <script src="/js/colorbox.min.js"></script>
+    <?=$this->Html->script('plugins/input-mask/plugin')?>
+    <?=$this->Html->script('colorbox.min')?>
   </head>
   <body class="">
     <div class="page">

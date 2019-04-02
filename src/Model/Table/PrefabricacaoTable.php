@@ -13,7 +13,7 @@ class PrefabricacaoTable extends Table
         parent::initialize($config);
 
         $this->setTable('prefabricacao');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Produtos', [
