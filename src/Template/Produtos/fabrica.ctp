@@ -22,8 +22,9 @@
                         <td><?= $produto->data_validade ?></td>
                         <td><?= $produto->quantidade ?></td>
                         <td class="actions">
+                            <?= ($produto->finalizado!='1'?$this->Html->link('finalizar', ['action' => 'finalizar', $produto->id]):'') ?>
                             <?= $this->Html->link(__('View'), ['action' => 'view', $produto->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $produto->id]) ?>
+                            <?= ($produto->finalizado!='1'?$this->Html->link(__('Edit'), ['action' => 'edit', $produto->id]):'') ?>
                             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $produto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produto->id)]) ?>
                         </td>
                     </tr>

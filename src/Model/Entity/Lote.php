@@ -11,11 +11,11 @@ use Cake\ORM\Entity;
  * @property string|null $numero
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenDate|null $validade
- * @property bool|null $finalizado
  * @property float|null $quantidade
  * @property int|null $unidade_medida_id
  *
  * @property \App\Model\Entity\Fabricacao $fabricacao
+ * @property \App\Model\Entity\UnidadeMedida $unidade_medida
  */
 class Lote extends Entity
 {
@@ -34,9 +34,9 @@ class Lote extends Entity
         'numero' => true,
         'created' => true,
         'validade' => true,
-        'finalizado' => true,
         'quantidade' => true,
         'unidade_medida_id' => true,
-        'fabricacao' => true
+        'fabricacao' => true,
+        'unidade_medida' => true
     ];
 }

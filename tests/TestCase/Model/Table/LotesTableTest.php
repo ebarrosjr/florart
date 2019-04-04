@@ -25,7 +25,8 @@ class LotesTableTest extends TestCase
      */
     public $fixtures = [
         'app.Lotes',
-        'app.Fabricacao'
+        'app.Fabricacaos',
+        'app.UnidadeMedidas'
     ];
 
     /**

@@ -93,8 +93,9 @@ CREATE TABLE `fabricacao` (
   `quantidade` double(15,2) unsigned DEFAULT NULL,
   `unidade_medida_id` int(10) unsigned DEFAULT NULL,
   `observacao` longtext,
+  `finalizado` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +104,7 @@ CREATE TABLE `fabricacao` (
 
 LOCK TABLES `fabricacao` WRITE;
 /*!40000 ALTER TABLE `fabricacao` DISABLE KEYS */;
+INSERT INTO `fabricacao` VALUES (14,1,'2019-04-02 00:00:00',NULL,120.00,1,NULL,1),(16,1,NULL,NULL,10.00,1,NULL,0),(17,2,'2019-04-02 00:00:00',NULL,12.00,1,NULL,0);
 /*!40000 ALTER TABLE `fabricacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,6 +154,41 @@ LOCK TABLES `grupo_produtos` WRITE;
 /*!40000 ALTER TABLE `grupo_produtos` DISABLE KEYS */;
 INSERT INTO `grupo_produtos` VALUES (1,'Grupo vermelho');
 /*!40000 ALTER TABLE `grupo_produtos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itens_finalizacao`
+--
+
+DROP TABLE IF EXISTS `itens_finalizacao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itens_finalizacao` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fabricacao_id` int(11) DEFAULT NULL,
+  `manufatura_id` int(10) unsigned DEFAULT NULL,
+  `materia_prima_id` int(10) unsigned DEFAULT NULL,
+  `prefabricacao_id` int(10) unsigned DEFAULT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `quantidade` double(15,2) unsigned DEFAULT NULL,
+  `valor_combinado` double(15,2) unsigned DEFAULT NULL,
+  `unitario` tinyint(1) unsigned DEFAULT NULL,
+  `data_inicio` timestamp NULL DEFAULT NULL,
+  `data_fim` timestamp NULL DEFAULT NULL,
+  `valor_pago` double(15,2) unsigned DEFAULT NULL,
+  `forma_pagamento_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itens_finalizacao`
+--
+
+LOCK TABLES `itens_finalizacao` WRITE;
+/*!40000 ALTER TABLE `itens_finalizacao` DISABLE KEYS */;
+INSERT INTO `itens_finalizacao` VALUES (1,14,NULL,NULL,2,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(3,16,NULL,NULL,6,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(4,16,NULL,NULL,2,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL),(5,16,NULL,2,NULL,NULL,1.00,NULL,1,NULL,NULL,NULL,NULL),(6,17,NULL,NULL,7,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(7,17,NULL,NULL,2,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `itens_finalizacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -205,7 +242,7 @@ CREATE TABLE `itens_producao` (
   `valor_pago` double(15,2) unsigned DEFAULT NULL,
   `forma_pagamento_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,8 +251,22 @@ CREATE TABLE `itens_producao` (
 
 LOCK TABLES `itens_producao` WRITE;
 /*!40000 ALTER TABLE `itens_producao` DISABLE KEYS */;
+INSERT INTO `itens_producao` VALUES (1,1,NULL,2,1,120.00,NULL,0,'2018-04-05 00:00:00',NULL,NULL,NULL),(2,2,NULL,2,1,120.00,NULL,0,'2018-04-05 00:00:00',NULL,NULL,NULL),(3,4,NULL,2,1,120.00,NULL,0,'2018-04-05 00:00:00',NULL,NULL,NULL),(4,1,NULL,3,1,500.00,NULL,0,'2019-04-01 00:00:00',NULL,NULL,NULL),(5,NULL,1,6,NULL,1.00,NULL,1,NULL,NULL,NULL,NULL),(6,NULL,2,6,NULL,1.00,NULL,1,NULL,NULL,NULL,NULL),(7,1,NULL,7,1,12.00,NULL,1,'2019-04-01 00:00:00',NULL,NULL,NULL),(8,2,NULL,7,1,12.00,NULL,1,'2019-04-01 00:00:00',NULL,NULL,NULL),(9,4,NULL,7,1,12.00,NULL,1,'2019-04-01 00:00:00',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `itens_producao` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `itens_usados`
+--
+
+DROP TABLE IF EXISTS `itens_usados`;
+/*!50001 DROP VIEW IF EXISTS `itens_usados`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `itens_usados` AS SELECT 
+ 1 AS `materia_prima_id`,
+ 1 AS `quantidade`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `lotes`
@@ -230,11 +281,10 @@ CREATE TABLE `lotes` (
   `numero` varchar(45) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `validade` date DEFAULT NULL,
-  `finalizado` tinyint(1) unsigned DEFAULT NULL,
   `quantidade` double(15,2) unsigned DEFAULT NULL,
   `unidade_medida_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,6 +293,7 @@ CREATE TABLE `lotes` (
 
 LOCK TABLES `lotes` WRITE;
 /*!40000 ALTER TABLE `lotes` DISABLE KEYS */;
+INSERT INTO `lotes` VALUES (1,14,'P00001420190404-1','2019-04-04 00:23:06','2019-10-02',120.00,1);
 /*!40000 ALTER TABLE `lotes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,6 +350,32 @@ INSERT INTO `materia_primas` VALUES (1,7,'AGUA',NULL),(2,8,'ALCOOL CEREAIS COM F
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `materiaprima_disponiveis`
+--
+
+DROP TABLE IF EXISTS `materiaprima_disponiveis`;
+/*!50001 DROP VIEW IF EXISTS `materiaprima_disponiveis`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `materiaprima_disponiveis` AS SELECT 
+ 1 AS `id`,
+ 1 AS `nome`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `pflivres`
+--
+
+DROP TABLE IF EXISTS `pflivres`;
+/*!50001 DROP VIEW IF EXISTS `pflivres`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `pflivres` AS SELECT 
+ 1 AS `id`,
+ 1 AS `nome`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `prefabricacao`
 --
 
@@ -316,7 +393,7 @@ CREATE TABLE `prefabricacao` (
   `quantidade` double(15,2) DEFAULT NULL,
   `unidade_medida_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,6 +402,7 @@ CREATE TABLE `prefabricacao` (
 
 LOCK TABLES `prefabricacao` WRITE;
 /*!40000 ALTER TABLE `prefabricacao` DISABLE KEYS */;
+INSERT INTO `prefabricacao` VALUES (2,NULL,NULL,1,'2019-04-02 00:00:00',NULL,'Reserva do Luzinho',120.00,1),(3,NULL,NULL,1,NULL,NULL,'Reserva do Sr. Antonio',500.00,3),(6,NULL,1,NULL,'2019-04-02 00:00:00',NULL,'teste de hoje',120.00,1),(7,NULL,1,NULL,NULL,NULL,'vermelho',12.00,1);
 /*!40000 ALTER TABLE `prefabricacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,7 +421,7 @@ CREATE TABLE `produtos` (
   `valor_atacado` double(15,2) unsigned DEFAULT NULL,
   `estoque_minimo` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +430,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (1,NULL,'Água de flor: Laranjeira',9.50,8.00,0);
+INSERT INTO `produtos` VALUES (1,NULL,'Água de flor: Laranjeira',9.50,8.00,0),(2,1,'Pó de amor',6.00,4.50,12);
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,8 +492,9 @@ DROP TABLE IF EXISTS `tipo_produtos`;
 CREATE TABLE `tipo_produtos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
+  `codigo_ncn` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +503,7 @@ CREATE TABLE `tipo_produtos` (
 
 LOCK TABLES `tipo_produtos` WRITE;
 /*!40000 ALTER TABLE `tipo_produtos` DISABLE KEYS */;
-INSERT INTO `tipo_produtos` VALUES (1,'Pó'),(2,'Água');
+INSERT INTO `tipo_produtos` VALUES (1,'Pó',NULL),(2,'Água',NULL),(3,'teste','456789');
 /*!40000 ALTER TABLE `tipo_produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -451,6 +530,45 @@ LOCK TABLES `unidade_medidas` WRITE;
 INSERT INTO `unidade_medidas` VALUES (1,'Unidade'),(2,'Mililitros'),(3,'Gramas');
 /*!40000 ALTER TABLE `unidade_medidas` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `usados_fabricacao`
+--
+
+DROP TABLE IF EXISTS `usados_fabricacao`;
+/*!50001 DROP VIEW IF EXISTS `usados_fabricacao`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `usados_fabricacao` AS SELECT 
+ 1 AS `materia_prima_id`,
+ 1 AS `quantidade`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `usados_na_fabricacao`
+--
+
+DROP TABLE IF EXISTS `usados_na_fabricacao`;
+/*!50001 DROP VIEW IF EXISTS `usados_na_fabricacao`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `usados_na_fabricacao` AS SELECT 
+ 1 AS `prefabricacao_id`,
+ 1 AS `usados`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `usados_prefabricacao`
+--
+
+DROP TABLE IF EXISTS `usados_prefabricacao`;
+/*!50001 DROP VIEW IF EXISTS `usados_prefabricacao`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `usados_prefabricacao` AS SELECT 
+ 1 AS `materia_prima_id`,
+ 1 AS `quantidade`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `users`
@@ -481,6 +599,114 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'Maria Antonietta','mariaversiani@yahoo.com.br','$2y$10$SyNt9aiaUGJWV6LxxAe6/.4RRh1tRdzmnl4X0C0RKi2jN54bCNScq','2019-03-06 00:33:50','2019-03-06 00:34:23',1,'A');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `itens_usados`
+--
+
+/*!50001 DROP VIEW IF EXISTS `itens_usados`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `itens_usados` AS select `a`.`materia_prima_id` AS `materia_prima_id`,(coalesce(`a`.`quantidade`,0) - coalesce(`b`.`quantidade`,0)) AS `quantidade` from (`usados_prefabricacao` `a` left join `usados_fabricacao` `b` on((`b`.`materia_prima_id` = `a`.`materia_prima_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `materiaprima_disponiveis`
+--
+
+/*!50001 DROP VIEW IF EXISTS `materiaprima_disponiveis`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `materiaprima_disponiveis` AS select `ino`.`id` AS `id`,concat(`mp`.`nome`,' (',(`ino`.`quantidade` - coalesce(`iu`.`quantidade`,0)),') ',`c`.`nome`,' [',convert(date_format(`co`.`data`,'%d/%m/%Y') using latin1),']') AS `nome` from ((((`compras` `co` left join `itens_notas` `ino` on(((`ino`.`nota_id` = `co`.`id`) and (`ino`.`tipo_nota` = 'C')))) join `materia_primas` `mp` on((`mp`.`id` = `ino`.`item`))) left join `itens_usados` `iu` on((`iu`.`materia_prima_id` = `ino`.`id`))) join `clientes` `c` on((`c`.`id` = `co`.`cliente_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pflivres`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pflivres`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pflivres` AS select `pf`.`id` AS `id`,concat(`pf`.`nome`,' [',(`pf`.`quantidade` - coalesce(`x`.`usados`,0)),']') AS `nome` from (`prefabricacao` `pf` left join `usados_na_fabricacao` `x` on((`x`.`prefabricacao_id` = `pf`.`id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `usados_fabricacao`
+--
+
+/*!50001 DROP VIEW IF EXISTS `usados_fabricacao`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `usados_fabricacao` AS select `itens_finalizacao`.`materia_prima_id` AS `materia_prima_id`,sum(`itens_finalizacao`.`quantidade`) AS `quantidade` from `itens_finalizacao` where (`itens_finalizacao`.`materia_prima_id` is not null) group by `itens_finalizacao`.`materia_prima_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `usados_na_fabricacao`
+--
+
+/*!50001 DROP VIEW IF EXISTS `usados_na_fabricacao`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `usados_na_fabricacao` AS select `itens_finalizacao`.`prefabricacao_id` AS `prefabricacao_id`,sum(`itens_finalizacao`.`quantidade`) AS `usados` from `itens_finalizacao` group by `itens_finalizacao`.`prefabricacao_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `usados_prefabricacao`
+--
+
+/*!50001 DROP VIEW IF EXISTS `usados_prefabricacao`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `usados_prefabricacao` AS select `itens_producao`.`materia_prima_id` AS `materia_prima_id`,sum(`itens_producao`.`quantidade`) AS `quantidade` from `itens_producao` where (`itens_producao`.`materia_prima_id` is not null) group by `itens_producao`.`materia_prima_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -491,4 +717,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-27  9:17:15
+-- Dump completed on 2019-04-04  7:31:35

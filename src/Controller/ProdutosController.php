@@ -75,6 +75,25 @@ class ProdutosController extends AppController
         $this->set(compact('fabricacao','usuarios','manufaturas','pf','mp','grupo_produtos','tipo_produtos','produtos','medidas'));        
     }
 
+    public function finalizar($id)
+    {
+        $_F = TableRegistry::get('Fabricacao');
+        $_L = TableRegistry::get('Lotes');
+        $produto = $_F->get($id,['contain'=>'Produtos']);
+        $lote = ($produto->grupo_produto_id!=null?'G'.str_pad($produto->grupo_produto_id,3,STR_PAD_LEFT).'P'.str_pad($produto->id,3,'0',STR_PAD_LEFT):'P'.str_pad($produto->id,6,'0',STR_PAD_LEFT)).date('Ymd');
+        $produto->finalizado = 1;
+        $_F->save($produto);
+        $_lote = $_L->newEntity();
+        $_lote->fabricacao_id = $produto->id;
+        $_lote->validade = $produto->data_validade!=''?$produto->data_validade:date('Y-m-d', strtotime($produto->data_fabricacao.' + 6 months'));
+        $_lote->quantidade = $produto->quantidade;
+        $_lote->unidade_medida_id = $produto->unidade_medida_id;
+        $nl = $_L->save($_lote);
+        $_lote->numero = $lote.'-'.$nl->id;
+        $nl = $_L->save($_lote);
+        dd($nl);
+    }
+
     public function preFabrica()
     {
         $this->PreFabricacao = TableRegistry::get('Prefabricacao');
