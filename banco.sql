@@ -95,7 +95,7 @@ CREATE TABLE `fabricacao` (
   `observacao` longtext,
   `finalizado` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `fabricacao` (
 
 LOCK TABLES `fabricacao` WRITE;
 /*!40000 ALTER TABLE `fabricacao` DISABLE KEYS */;
-INSERT INTO `fabricacao` VALUES (14,1,'2019-04-02 00:00:00',NULL,120.00,1,NULL,1),(16,1,NULL,NULL,10.00,1,NULL,0),(17,2,'2019-04-02 00:00:00',NULL,12.00,1,NULL,0);
+INSERT INTO `fabricacao` VALUES (14,1,'2019-04-02 00:00:00',NULL,120.00,1,NULL,1),(16,1,NULL,NULL,10.00,1,NULL,1),(17,2,'2019-04-02 00:00:00',NULL,12.00,1,NULL,1),(18,2,'2019-04-10 00:00:00','2020-04-10 00:00:00',120.00,1,NULL,1),(19,1,'2019-04-05 00:00:00',NULL,100.00,1,NULL,1),(20,1,'2019-04-02 00:00:00',NULL,6.00,1,NULL,0);
 /*!40000 ALTER TABLE `fabricacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +178,7 @@ CREATE TABLE `itens_finalizacao` (
   `valor_pago` double(15,2) unsigned DEFAULT NULL,
   `forma_pagamento_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `itens_finalizacao` (
 
 LOCK TABLES `itens_finalizacao` WRITE;
 /*!40000 ALTER TABLE `itens_finalizacao` DISABLE KEYS */;
-INSERT INTO `itens_finalizacao` VALUES (1,14,NULL,NULL,2,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(3,16,NULL,NULL,6,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(4,16,NULL,NULL,2,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL),(5,16,NULL,2,NULL,NULL,1.00,NULL,1,NULL,NULL,NULL,NULL),(6,17,NULL,NULL,7,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(7,17,NULL,NULL,2,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL);
+INSERT INTO `itens_finalizacao` VALUES (1,14,NULL,NULL,2,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(3,16,NULL,NULL,6,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(4,16,NULL,NULL,2,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL),(5,16,NULL,2,NULL,NULL,1.00,NULL,1,NULL,NULL,NULL,NULL),(6,17,NULL,NULL,7,NULL,10.00,NULL,1,NULL,NULL,NULL,NULL),(7,17,NULL,NULL,2,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL),(8,18,NULL,NULL,7,NULL,2.00,NULL,1,NULL,NULL,NULL,NULL),(9,18,NULL,NULL,3,NULL,118.00,NULL,1,NULL,NULL,NULL,NULL),(10,19,NULL,NULL,2,NULL,100.00,NULL,1,NULL,NULL,NULL,NULL),(11,20,NULL,NULL,2,NULL,6.00,NULL,1,NULL,NULL,NULL,NULL),(12,20,NULL,NULL,6,NULL,6.00,NULL,1,NULL,NULL,NULL,NULL),(13,20,2,NULL,NULL,1,6.00,10.00,0,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `itens_finalizacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +284,7 @@ CREATE TABLE `lotes` (
   `quantidade` double(15,2) unsigned DEFAULT NULL,
   `unidade_medida_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +293,7 @@ CREATE TABLE `lotes` (
 
 LOCK TABLES `lotes` WRITE;
 /*!40000 ALTER TABLE `lotes` DISABLE KEYS */;
-INSERT INTO `lotes` VALUES (1,14,'P00001420190404-1','2019-04-04 00:23:06','2019-10-02',120.00,1);
+INSERT INTO `lotes` VALUES (1,14,'P00001420190404-1','2019-04-04 00:23:06','2019-10-02',120.00,1),(2,16,'P00001620190410-2','2019-04-10 21:14:19','2019-10-10',10.00,1),(3,17,'P00001720190410-3','2019-04-10 21:17:21','2019-10-02',12.00,1),(4,16,'P00001620190410-4','2019-04-10 21:48:16','2019-10-10',10.00,1),(5,16,'P00001620190410-5','2019-04-10 21:48:18','2019-10-10',10.00,1),(6,16,'P00001620190410-6','2019-04-10 21:48:19','2019-10-10',10.00,1),(7,16,'P00001620190410-7','2019-04-10 21:48:19','2019-10-10',10.00,1),(8,16,'P00001620190410-8','2019-04-10 21:48:20','2019-10-10',10.00,1),(9,18,'P00001820190410-9','2019-04-10 22:09:06','2020-04-10',120.00,1),(10,19,'P00001920190410-10','2019-04-10 22:34:44','2019-10-05',100.00,1);
 /*!40000 ALTER TABLE `lotes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,6 +361,62 @@ SET character_set_client = utf8;
  1 AS `id`,
  1 AS `nome`*/;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `pedido_produtos`
+--
+
+DROP TABLE IF EXISTS `pedido_produtos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pedido_produtos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pedido_id` int(10) unsigned DEFAULT NULL,
+  `produto_id` int(10) unsigned DEFAULT NULL,
+  `quantidade` int(10) unsigned DEFAULT NULL,
+  `valor_combinado` double(15,2) unsigned DEFAULT NULL,
+  `unidade_medida_id` int(10) unsigned DEFAULT NULL,
+  `entregue` tinyint(1) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pedido_produtos`
+--
+
+LOCK TABLES `pedido_produtos` WRITE;
+/*!40000 ALTER TABLE `pedido_produtos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pedido_produtos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pedidos`
+--
+
+DROP TABLE IF EXISTS `pedidos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pedidos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cliente_id` int(10) unsigned DEFAULT NULL,
+  `data_pedido` timestamp NULL DEFAULT NULL,
+  `previsao_entrega` timestamp NULL DEFAULT NULL,
+  `data_entrega` timestamp NULL DEFAULT NULL,
+  `situacao` tinyint(1) unsigned DEFAULT NULL,
+  `observacao` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pedidos`
+--
+
+LOCK TABLES `pedidos` WRITE;
+/*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Temporary table structure for view `pflivres`
@@ -717,4 +773,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-04  7:31:35
+-- Dump completed on 2019-04-11  7:51:32

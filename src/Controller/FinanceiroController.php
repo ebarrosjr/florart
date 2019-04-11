@@ -10,6 +10,7 @@ class FinanceiroController extends AppController
     {
         parent::initialize();
         $this->Compras = TableRegistry::get('Compras');
+        $this->Pedidos = TableRegistry::get('Pedidos');
         //$this->Vendas = TableRegistry::get('Vendas');
     }
 
@@ -63,5 +64,26 @@ class FinanceiroController extends AppController
         $forma_pagamentos = $this->Compras->FormaPagamentos->find('list');
         $tipos = TableRegistry::get('TipoMateriaPrimas')->find('all',['fields'=>['id','nome']]);
         $this->set(compact('compra','fornecedores','forma_pagamentos','tipos'));
+    }
+
+    public function pedidos()
+    {
+        $this->paginate = [
+            'contain' => ['Clientes','PedidoProdutos'=>'Produtos']
+        ];
+        $pedidos = $this->paginate($this->Pedidos);
+        $this->set(compact('pedidos'));
+    }
+
+    public function novoPedido()
+    {
+        $pedido = $this->Pedidos->newEntity();
+        if($this->request->is('post'))
+        {
+            dd($this->request->getData());
+        }
+        $clientes = $this->Pedidos->clientes->find('list')->where(['tipo IN'=>['C','A']])->order(['nome'=>'desc']);
+        $produtos = $this->Pedidos->PedidoProdutos->Produtos->find('list')->order(['nome'=>'desc']);
+        $this->set(compact('pedido','clientes','produtos'));
     }
 }

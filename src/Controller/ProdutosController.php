@@ -80,18 +80,23 @@ class ProdutosController extends AppController
         $_F = TableRegistry::get('Fabricacao');
         $_L = TableRegistry::get('Lotes');
         $produto = $_F->get($id,['contain'=>'Produtos']);
-        $lote = ($produto->grupo_produto_id!=null?'G'.str_pad($produto->grupo_produto_id,3,STR_PAD_LEFT).'P'.str_pad($produto->id,3,'0',STR_PAD_LEFT):'P'.str_pad($produto->id,6,'0',STR_PAD_LEFT)).date('Ymd');
-        $produto->finalizado = 1;
-        $_F->save($produto);
-        $_lote = $_L->newEntity();
-        $_lote->fabricacao_id = $produto->id;
-        $_lote->validade = $produto->data_validade!=''?$produto->data_validade:date('Y-m-d', strtotime($produto->data_fabricacao.' + 6 months'));
-        $_lote->quantidade = $produto->quantidade;
-        $_lote->unidade_medida_id = $produto->unidade_medida_id;
-        $nl = $_L->save($_lote);
-        $_lote->numero = $lote.'-'.$nl->id;
-        $nl = $_L->save($_lote);
-        dd($nl);
+        if($produto->finalizado!=1){
+            $lote = ($produto->grupo_produto_id!=null?'G'.str_pad($produto->grupo_produto_id,3,STR_PAD_LEFT).'P'.str_pad($produto->id,3,'0',STR_PAD_LEFT):'P'.str_pad($produto->id,6,'0',STR_PAD_LEFT)).date('Ymd');
+            $produto->finalizado = 1;
+            $_F->save($produto);
+            $_lote = $_L->newEntity();
+            $_lote->fabricacao_id = $produto->id;
+            $_lote->validade = $produto->data_validade!=''?$produto->data_validade:date('Y-m-d', strtotime($produto->data_fabricacao.' + 6 months'));
+            $_lote->quantidade = $produto->quantidade;
+            $_lote->unidade_medida_id = $produto->unidade_medida_id;
+            $nl = $_L->save($_lote);
+            $_lote->numero = $lote.'-'.$nl->id;
+            $nl = $_L->save($_lote);
+            $this->Flash->success('O processo de fabricação foi finalizado e o lote '.$nl->numero.' foi criado!');
+        }else{
+            $this->Flash->error('O processo de fabricação que deseja finalizar já foi finalizado!');
+        }
+        return $this->redirect(['action'=>'fabrica']);
     }
 
     public function preFabrica()

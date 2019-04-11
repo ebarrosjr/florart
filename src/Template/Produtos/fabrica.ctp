@@ -18,8 +18,8 @@
                     <?php foreach ($lotes as $produto): ?>
                     <tr>
                         <td><?= h($produto->produto->nome) ?></td>
-                        <td><?= $produto->data_fabricacao ?></td>
-                        <td><?= $produto->data_validade ?></td>
+                        <td><?= date('d/m/Y', strtotime($produto->data_fabricacao)) ?></td>
+                        <td><?= date('d/m/Y', strtotime($produto->data_validade)) ?></td>
                         <td><?= $produto->quantidade ?></td>
                         <td class="actions">
                             <?= ($produto->finalizado!='1'?$this->Html->link('finalizar', ['action' => 'finalizar', $produto->id]):'') ?>
