@@ -20,21 +20,15 @@
                 <div class="col-12">
                     <div class="card mt-3 p-2" style="background-color:#eeeeee">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <?=$this->Form->control('produto_id',['label'=>'Produto','class'=>'form-control']);?>
                             </div>
-                            <div class="col-md-6">
-                                <label for="materia">Materia prima</label>
-                                <select name="materia" id="materia" class="form-control">
-                                    <option value=""> - Selecione o tipo - </option>
-                                </select>
-                            </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <label for="quantidade">Quantidade</label>
                                 <input type="text" name="quantidade" id="quantidade" class="form-control">
                             </div>
-                            <div class="col-md-2">
-                                <label for="valor">Valor</label>
+                            <div class="col-md-3">
+                                <label for="valor">Valor combinado</label>
                                     <input type="text" name="valor" id="valor" class="form-control">
                                 </div>
                             <div class="col-md-1 mt-6">
