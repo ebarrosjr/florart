@@ -33,6 +33,7 @@ class Produto extends Entity
         'valor_varejo' => true,
         'valor_atacado' => true,
         'estoque_minimo' => true,
+        'atacado_minimo' => true,
         'grupo_produto' => true
     ];
 }

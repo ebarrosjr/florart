@@ -6,29 +6,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * UnidadeMedidas Model
- *
- * @property \App\Model\Table\ItensNotasTable|\Cake\ORM\Association\HasMany $ItensNotas
- *
- * @method \App\Model\Entity\UnidadeMedida get($primaryKey, $options = [])
- * @method \App\Model\Entity\UnidadeMedida newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\UnidadeMedida[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\UnidadeMedida|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UnidadeMedida|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UnidadeMedida patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\UnidadeMedida[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\UnidadeMedida findOrCreate($search, callable $callback = null, $options = [])
- */
 class UnidadeMedidasTable extends Table
 {
-
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -37,17 +16,31 @@ class UnidadeMedidasTable extends Table
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('ParentUnidadeMedidas', [
+            'className' => 'UnidadeMedidas',
+            'foreignKey' => 'parent_id'
+        ]);
+        $this->hasMany('Fabricacao', [
+            'foreignKey' => 'unidade_medida_id'
+        ]);
         $this->hasMany('ItensNotas', [
             'foreignKey' => 'unidade_medida_id'
         ]);
+        $this->hasMany('Lotes', [
+            'foreignKey' => 'unidade_medida_id'
+        ]);
+        $this->hasMany('PedidoProdutos', [
+            'foreignKey' => 'unidade_medida_id'
+        ]);
+        $this->hasMany('Prefabricacao', [
+            'foreignKey' => 'unidade_medida_id'
+        ]);
+        $this->hasMany('ChildUnidadeMedidas', [
+            'className' => 'UnidadeMedidas',
+            'foreignKey' => 'parent_id'
+        ]);
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator)
     {
         $validator
@@ -59,6 +52,30 @@ class UnidadeMedidasTable extends Table
             ->maxLength('nome', 45)
             ->allowEmptyString('nome');
 
+        $validator
+            ->scalar('sigla')
+            ->maxLength('sigla', 10)
+            ->allowEmptyString('sigla');
+
+        $validator
+            ->numeric('fator_multiplicativo')
+            ->greaterThanOrEqual('fator_multiplicativo', 0)
+            ->allowEmptyString('fator_multiplicativo');
+
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['parent_id'], 'ParentUnidadeMedidas'));
+
+        return $rules;
     }
 }

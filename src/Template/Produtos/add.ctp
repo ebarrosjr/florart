@@ -16,19 +16,24 @@
                 echo $this->Form->control('nome',['class'=>'form-control']);
                 ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 <?php
                 echo $this->Form->control('valor_varejo',['class'=>'form-control']);
                 ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 <?php
                 echo $this->Form->control('valor_atacado',['class'=>'form-control']);
                 ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 <?php
                 echo $this->Form->control('estoque_minimo',['class'=>'form-control']);
+                ?>
+                </div>
+                <div class="col-md-3">
+                <?php
+                echo $this->Form->control('atacado_minimo',['class'=>'form-control']);
                 ?>
                 </div>
             </div>
