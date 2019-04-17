@@ -108,7 +108,7 @@ class FinanceiroController extends AppController
                         }else{
                             $_mult = 1;
                         }
-                        if($_valor->atacado_minimo<=($item_pedido->quantidade/$_mult))
+                        if($_valor->atacado_minimo<=($item_pedido->quantidade*$_mult))
                         {
                             $valor = $_valor->valor_atacado;
                         }else{
