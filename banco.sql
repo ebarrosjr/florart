@@ -263,7 +263,7 @@ DROP TABLE IF EXISTS `itens_usados`;
 /*!50001 DROP VIEW IF EXISTS `itens_usados`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `itens_usados` AS SELECT 
+/*!50001 CREATE VIEW `itens_usados` AS SELECT
  1 AS `materia_prima_id`,
  1 AS `quantidade`*/;
 SET character_set_client = @saved_cs_client;
@@ -357,7 +357,7 @@ DROP TABLE IF EXISTS `materiaprima_disponiveis`;
 /*!50001 DROP VIEW IF EXISTS `materiaprima_disponiveis`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `materiaprima_disponiveis` AS SELECT 
+/*!50001 CREATE VIEW `materiaprima_disponiveis` AS SELECT
  1 AS `id`,
  1 AS `nome`*/;
 SET character_set_client = @saved_cs_client;
@@ -427,7 +427,7 @@ DROP TABLE IF EXISTS `pflivres`;
 /*!50001 DROP VIEW IF EXISTS `pflivres`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `pflivres` AS SELECT 
+/*!50001 CREATE VIEW `pflivres` AS SELECT
  1 AS `id`,
  1 AS `nome`*/;
 SET character_set_client = @saved_cs_client;
@@ -596,7 +596,7 @@ DROP TABLE IF EXISTS `usados_fabricacao`;
 /*!50001 DROP VIEW IF EXISTS `usados_fabricacao`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `usados_fabricacao` AS SELECT 
+/*!50001 CREATE VIEW `usados_fabricacao` AS SELECT
  1 AS `materia_prima_id`,
  1 AS `quantidade`*/;
 SET character_set_client = @saved_cs_client;
@@ -609,7 +609,7 @@ DROP TABLE IF EXISTS `usados_na_fabricacao`;
 /*!50001 DROP VIEW IF EXISTS `usados_na_fabricacao`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `usados_na_fabricacao` AS SELECT 
+/*!50001 CREATE VIEW `usados_na_fabricacao` AS SELECT
  1 AS `prefabricacao_id`,
  1 AS `usados`*/;
 SET character_set_client = @saved_cs_client;
@@ -622,7 +622,7 @@ DROP TABLE IF EXISTS `usados_prefabricacao`;
 /*!50001 DROP VIEW IF EXISTS `usados_prefabricacao`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `usados_prefabricacao` AS SELECT 
+/*!50001 CREATE VIEW `usados_prefabricacao` AS SELECT
  1 AS `materia_prima_id`,
  1 AS `quantidade`*/;
 SET character_set_client = @saved_cs_client;
@@ -668,9 +668,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `itens_usados` AS select `a`.`materia_prima_id` AS `materia_prima_id`,(coalesce(`a`.`quantidade`,0) - coalesce(`b`.`quantidade`,0)) AS `quantidade` from (`usados_prefabricacao` `a` left join `usados_fabricacao` `b` on((`b`.`materia_prima_id` = `a`.`materia_prima_id`))) */;
+/*!50001 CREATE VIEW `itens_usados` AS select `a`.`materia_prima_id` AS `materia_prima_id`,(coalesce(`a`.`quantidade`,0) - coalesce(`b`.`quantidade`,0)) AS `quantidade` from (`usados_prefabricacao` `a` left join `usados_fabricacao` `b` on((`b`.`materia_prima_id` = `a`.`materia_prima_id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -686,9 +684,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `materiaprima_disponiveis` AS select `ino`.`id` AS `id`,concat(`mp`.`nome`,' (',(`ino`.`quantidade` - coalesce(`iu`.`quantidade`,0)),') ',`c`.`nome`,' [',convert(date_format(`co`.`data`,'%d/%m/%Y') using latin1),']') AS `nome` from ((((`compras` `co` left join `itens_notas` `ino` on(((`ino`.`nota_id` = `co`.`id`) and (`ino`.`tipo_nota` = 'C')))) join `materia_primas` `mp` on((`mp`.`id` = `ino`.`item`))) left join `itens_usados` `iu` on((`iu`.`materia_prima_id` = `ino`.`id`))) join `clientes` `c` on((`c`.`id` = `co`.`cliente_id`))) */;
+/*!50001 CREATE VIEW `materiaprima_disponiveis` AS select `ino`.`id` AS `id`,concat(`mp`.`nome`,' (',(`ino`.`quantidade` - coalesce(`iu`.`quantidade`,0)),') ',`c`.`nome`,' [',convert(date_format(`co`.`data`,'%d/%m/%Y') using latin1),']') AS `nome` from ((((`compras` `co` left join `itens_notas` `ino` on(((`ino`.`nota_id` = `co`.`id`) and (`ino`.`tipo_nota` = 'C')))) join `materia_primas` `mp` on((`mp`.`id` = `ino`.`item`))) left join `itens_usados` `iu` on((`iu`.`materia_prima_id` = `ino`.`id`))) join `clientes` `c` on((`c`.`id` = `co`.`cliente_id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -704,9 +700,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `pflivres` AS select `pf`.`id` AS `id`,concat(`pf`.`nome`,' [',(`pf`.`quantidade` - coalesce(`x`.`usados`,0)),']') AS `nome` from (`prefabricacao` `pf` left join `usados_na_fabricacao` `x` on((`x`.`prefabricacao_id` = `pf`.`id`))) */;
+/*!50001 CREATE VIEW `pflivres` AS select `pf`.`id` AS `id`,concat(`pf`.`nome`,' [',(`pf`.`quantidade` - coalesce(`x`.`usados`,0)),']') AS `nome` from (`prefabricacao` `pf` left join `usados_na_fabricacao` `x` on((`x`.`prefabricacao_id` = `pf`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -722,9 +716,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `usados_fabricacao` AS select `itens_finalizacao`.`materia_prima_id` AS `materia_prima_id`,sum(`itens_finalizacao`.`quantidade`) AS `quantidade` from `itens_finalizacao` where (`itens_finalizacao`.`materia_prima_id` is not null) group by `itens_finalizacao`.`materia_prima_id` */;
+/*!50001 CREATE VIEW `usados_fabricacao` AS select `itens_finalizacao`.`materia_prima_id` AS `materia_prima_id`,sum(`itens_finalizacao`.`quantidade`) AS `quantidade` from `itens_finalizacao` where (`itens_finalizacao`.`materia_prima_id` is not null) group by `itens_finalizacao`.`materia_prima_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -740,9 +732,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `usados_na_fabricacao` AS select `itens_finalizacao`.`prefabricacao_id` AS `prefabricacao_id`,sum(`itens_finalizacao`.`quantidade`) AS `usados` from `itens_finalizacao` group by `itens_finalizacao`.`prefabricacao_id` */;
+/*!50001 CREATE VIEW `usados_na_fabricacao` AS select `itens_finalizacao`.`prefabricacao_id` AS `prefabricacao_id`,sum(`itens_finalizacao`.`quantidade`) AS `usados` from `itens_finalizacao` group by `itens_finalizacao`.`prefabricacao_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -758,9 +748,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `usados_prefabricacao` AS select `itens_producao`.`materia_prima_id` AS `materia_prima_id`,sum(`itens_producao`.`quantidade`) AS `quantidade` from `itens_producao` where (`itens_producao`.`materia_prima_id` is not null) group by `itens_producao`.`materia_prima_id` */;
+/*!50001 CREATE VIEW `usados_prefabricacao` AS select `itens_producao`.`materia_prima_id` AS `materia_prima_id`,sum(`itens_producao`.`quantidade`) AS `quantidade` from `itens_producao` where (`itens_producao`.`materia_prima_id` is not null) group by `itens_producao`.`materia_prima_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
