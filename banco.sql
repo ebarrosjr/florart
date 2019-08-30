@@ -378,7 +378,7 @@ CREATE TABLE `pedido_produtos` (
   `unidade_medida_id` int(10) unsigned DEFAULT NULL,
   `entregue` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +407,7 @@ CREATE TABLE `pedidos` (
   `observacao` longtext,
   `pago` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -477,8 +477,9 @@ CREATE TABLE `produtos` (
   `valor_varejo` double(15,2) unsigned DEFAULT NULL,
   `valor_atacado` double(15,2) unsigned DEFAULT NULL,
   `estoque_minimo` int(10) unsigned DEFAULT NULL,
+  `atacado_minimo` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,7 +488,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (1,NULL,'Água de flor: Laranjeira',9.50,8.00,0),(2,1,'Pó de amor',6.00,4.50,12);
+INSERT INTO `produtos` VALUES (1,NULL,'Água de flor: Laranjeira',9.50,8.00,24,60),(2,1,'Pó de amor',6.00,4.50,12,60),(3,NULL,'Água de melissa',0.80,0.67,12,600),(4,NULL,'Melissa 2',0.80,0.67,12,600);
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -574,8 +575,11 @@ DROP TABLE IF EXISTS `unidade_medidas`;
 CREATE TABLE `unidade_medidas` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
+  `sigla` varchar(10) DEFAULT NULL,
+  `parent_id` int(10) unsigned DEFAULT NULL,
+  `fator_multiplicativo` double(8,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -584,7 +588,7 @@ CREATE TABLE `unidade_medidas` (
 
 LOCK TABLES `unidade_medidas` WRITE;
 /*!40000 ALTER TABLE `unidade_medidas` DISABLE KEYS */;
-INSERT INTO `unidade_medidas` VALUES (1,'Unidade'),(2,'Mililitros'),(3,'Gramas');
+INSERT INTO `unidade_medidas` VALUES (1,'Unidade','un',NULL,NULL),(2,'Mililitros','ml',NULL,NULL),(3,'Gramas','g',NULL,NULL),(4,'Dúzia','dz',1,12.00),(5,'Quilo','Kg',3,1000.00);
 /*!40000 ALTER TABLE `unidade_medidas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -762,4 +766,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-12  7:46:10
+-- Dump completed on 2019-04-15  7:35:00

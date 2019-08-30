@@ -12,6 +12,7 @@
                         <th scope="col">Data</th>
                         <th scope="col">Previsão</th>
                         <th scope="col">Entrega</th>
+                        <th scope="col" class="actions"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,12 +23,13 @@
                     <tr>
                         <td><i class="detalhar fe fe-arrow-down-circle" data-attr="det_<?=$c->id;?>"></i> <?=$c->id;?></td>
                         <td><?=$c->cliente->nome;?></td>
-                        <td><?=$c->data_pedido;?></td>
-                        <td><?=$c->previsao_entrega;?></td>
-                        <td><?=$c->data_entrega;?></td>
+                        <td><?=date('d/m/Y', strtotime($c->data_pedido));?></td>
+                        <td><?=$c->previsao_entrega!=''?date('d/m/Y', strtotime($c->previsao_entrega)):'';?></td>
+                        <td><?=$c->data_entrega!=''?date('d/m/Y', strtotime($c->data_entrega)):'';?></td>
+                        <td class="actions">Finalizar Editar Cancelar</td>
                     </tr>
                     <tr id="det_<?=$c->id;?>" style="display:none">
-                        <td colspan="4">
+                        <td colspan="6">
                             <div class="jumbotron p-2">
                                 <table class="table card-table table-vcenter">
                                     <thead>
@@ -40,19 +42,20 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        foreach($c->itens_notas as $i)
+                                        foreach($c->pedido_produtos as $i)
                                         {
                                         ?>
                                         <tr>
                                             <td><?=$i->id;?></td>
-                                            <td><?=$i->materia_prima->nome;?></td>
-                                            <td><?=$i->quantidade;?></td>
-                                            <td>R$ <?=number_format($i->valor_unitario,2,',','.')?></td>
+                                            <td><?=$i->produto->nome;?></td>
+                                            <td><?=$i->quantidade.' '.$i->unidade_medida->sigla;?></td>
+                                            <td>R$ <?=number_format($i->valor_combinado*$i->quantidade,2,',','.')?></td>
                                         </tr>
                                         <?php
                                         }
                                         ?>
                                     </tbody>
+                                </table>
                             </div>
                         </td>
                     </tr>

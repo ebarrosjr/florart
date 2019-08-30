@@ -77,6 +77,10 @@ class ProdutosTable extends Table
             ->nonNegativeInteger('estoque_minimo')
             ->allowEmptyString('estoque_minimo');
 
+        $validator
+            ->nonNegativeInteger('atacado_minimo')
+            ->allowEmptyString('atacado_minimo');
+
         return $validator;
     }
 

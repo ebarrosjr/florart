@@ -11,6 +11,7 @@ class FinanceiroController extends AppController
         parent::initialize();
         $this->Compras = TableRegistry::get('Compras');
         $this->Pedidos = TableRegistry::get('Pedidos');
+        $this->PedidoProdutos = TableRegistry::get('PedidoProdutos');
         //$this->Vendas = TableRegistry::get('Vendas');
     }
 
@@ -69,7 +70,7 @@ class FinanceiroController extends AppController
     public function pedidos()
     {
         $this->paginate = [
-            'contain' => ['Clientes','PedidoProdutos'=>'Produtos']
+            'contain' => ['Clientes','PedidoProdutos'=>['Produtos','UnidadeMedidas']]
         ];
         $pedidos = $this->paginate($this->Pedidos);
         $this->set(compact('pedidos'));
@@ -80,10 +81,51 @@ class FinanceiroController extends AppController
         $pedido = $this->Pedidos->newEntity();
         if($this->request->is('post'))
         {
-            dd($this->request->getData());
+            $dados = $this->request->getData();
+            $pedido = $this->Pedidos->newEntity();
+            $pedido->cliente_id = $dados['cliente_id'];
+            $pedido->data_pedido = parent::acertaData($dados['data_pedido']);
+            $pedido->previsao_entrega = parent::acertaData($dados['previsao_entrega']);
+            $pedido->situacao = 0;
+            $pedido->pago = 0;
+            $pedido = $this->Pedidos->save($pedido);
+            if($pedido)
+            {
+                foreach($dados['item'] as $k => $v)
+                {
+                    $item_pedido = $this->PedidoProdutos->newEntity();
+                    $item_pedido->pedido_id = $pedido->id;
+                    $item_pedido->produto_id = $v;
+                    $item_pedido->quantidade = $dados['qtd'][$v];
+                    $item_pedido->unidade_medida_id = $dados['und'][$v];
+                    $item_pedido->valor_combinado = $dados['vlr'][$v];
+                    if($item_pedido->valor_combinado==0)
+                    {
+                        $_unidade = TableRegistry::get('UnidadeMedidas',['contains'=>'ParentUnidadeMedidas'])->get($item_pedido->unidade_medida_id);
+                        $_valor = TableRegistry::get('Produtos')->get($item_pedido->produto_id);
+                        if($_unidade->parent_id!=null){
+                            $_mult = $_unidade->fator_multiplicativo;
+                        }else{
+                            $_mult = 1;
+                        }
+                        if($_valor->atacado_minimo<=($item_pedido->quantidade*$_mult))
+                        {
+                            $valor = $_valor->valor_atacado;
+                        }else{
+                            $valor = $_valor->valor_varejo;
+                        }
+                        $item_pedido->valor_combinado = $valor;
+                    }
+                    $item_pedido->entregue = 0;
+                    $this->PedidoProdutos->save($item_pedido);
+                }
+                $this->Flash->success('Pedido salvo com sucesso!');
+                return $this->redirect(['action'=>'pedidos']);
+            }
         }
         $clientes = $this->Pedidos->clientes->find('list')->where(['tipo IN'=>['C','A']])->order(['nome'=>'desc']);
         $produtos = $this->Pedidos->PedidoProdutos->Produtos->find('list')->order(['nome'=>'desc']);
-        $this->set(compact('pedido','clientes','produtos'));
+        $unidades = TableRegistry::get('UnidadeMedidas')->find('list')->order(['nome'=>'desc']);
+        $this->set(compact('pedido','clientes','produtos','unidades'));
     }
 }

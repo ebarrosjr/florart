@@ -8,6 +8,9 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string|null $nome
+ * @property string|null $sigla
+ * @property int|null $parent_id
+ * @property float|null $fator_multiplicativo
  *
  * @property \App\Model\Entity\ItensNota[] $itens_notas
  */
@@ -25,6 +28,10 @@ class UnidadeMedida extends Entity
      */
     protected $_accessible = [
         'nome' => true,
-        'itens_notas' => true
+        'sigla' => true,
+        'parent_id' => true,
+        'fator_multiplicativo' => true,
+        'itens_notas' => true,
+        'parent_unidade_medida' => true
     ];
 }

@@ -95,6 +95,7 @@
                       <?=$this->Html->link('Mão de obra',['controller'=>'produtos','action'=>'maoDeObra'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Matéria-prima',['controller'=>'materia-primas'],['class'=>"dropdown-item"])?></a>
                       <?=$this->Html->link('Tipos e Grupos',['controller'=>'tipo-materia-primas'],['class'=>"dropdown-item"])?></a>
+                      <?=$this->Html->link('Unidades de medidas',['controller'=>'unidade-medidas'],['class'=>"dropdown-item"])?></a>
                     </div>
                   </li>
                   <li class="nav-item dropdown">
